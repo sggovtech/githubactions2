@@ -21,7 +21,6 @@ runs:
         key: B_instruments
     - name: get secrets
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         B_INSTRUMENT_DOWNLOAD_URL1: https://api.bseindia.com/BseIndiaAPI/api/LitsOfScripCSVDownload/w?segment=Equity&status=&industry=&Group=&Scripcode=
         B_INSTRUMENT_DOWNLOAD_URL2: https://api.bseindia.com/BseIndiaAPI/api/LitsOfScripCSVDownload/w?segment=EQT0&status=&industry=&Group=&Scripcode=
         B_SEARCH_CAP: https://www.bseindia.com/corporates/Sharehold_Searchnew.aspx
