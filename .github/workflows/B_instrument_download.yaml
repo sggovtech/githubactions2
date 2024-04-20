@@ -37,7 +37,7 @@ jobs:
             - name: pwd
               run: pwd
             - name: list 
-              run: ls - laR
+              run: ls -laR
             - name: test-action
               uses: ./.github/process
               with:
