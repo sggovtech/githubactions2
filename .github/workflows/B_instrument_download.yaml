@@ -34,6 +34,10 @@ jobs:
         runs-on: ubuntu-latest
         needs: download
         steps:
+            - name: pwd
+              run: pwd
+            - name: list 
+              run: ls - laR
             - name: test-action
               uses: ./.github/process
               with:
