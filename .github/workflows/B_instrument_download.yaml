@@ -2,6 +2,8 @@ name: B_instrument_download
 on:
     workflow_dispatch:
 permissions:
+    actions: write
+    id-token: write
     contents: write
 jobs:
     download:
@@ -10,11 +12,16 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+            - name: delete existing cache
+              continue-on-error: true
+              run: |
+                      gh cache delete --all
+              env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: get secrets
               uses: oNaiPs/secrets-to-env-action@v1
               with:
                 secrets: ${{ toJSON(secrets) }}
             - run: |
-                printenv
                 pip install -r requirements.txt
                 python B/instruments.py
