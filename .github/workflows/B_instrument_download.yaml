@@ -40,4 +40,5 @@ jobs:
               uses: ./.github/process
               with:
                 test_input: 1
+                test_input2: 2
         

@@ -4,6 +4,9 @@ inputs:
   test_input:
     description: key
     required: true
+  test_input2:
+    description: key2
+    required: false
 runs:
   using: composite
   steps:
