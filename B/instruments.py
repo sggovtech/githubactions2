@@ -12,8 +12,8 @@ async def B_download_instruments(client,url) -> pd.DataFrame:
     return df
 
 async def split_save():
-    B_instrument_download_url1 = os.environ["vars.B_instrument_download_url1"]
-    B_instrument_download_url2 = os.environ["vars.B_instrument_download_url2"]
+    B_instrument_download_url1 = os.environ["B_instrument_download_url1"]
+    B_instrument_download_url2 = os.environ["B_instrument_download_url2"]
     async with httpx.AsyncClient() as client:
         tasks = [
             B_download_instruments(client,B_instrument_download_url1),
