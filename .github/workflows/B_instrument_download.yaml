@@ -331,7 +331,7 @@ jobs:
                 timeout_seconds: 15
                 max_attempts: 25
                 command: |
-                    git add B_instruments_combine.py
+                    git add combined_instruments.csv
                     git config --global user.email "somegreya@gmail.com"
                     git config --global user.name "@gitci"
                     git commit -m "Add  file"
