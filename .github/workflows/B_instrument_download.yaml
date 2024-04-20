@@ -321,8 +321,18 @@ jobs:
                 path: |
                         B_instruments_19.csv
                 key: B_instruments_cap_19
-              
             - name: combine
               run: |
                     pip install -r requirements.txt
                     python B_instruments_combine.py
+            - name: "Push"
+              uses: nick-fields/retry@v3
+              with:
+                timeout_seconds: 15
+                max_attempts: 25
+                command: |
+                    git add B_instruments_combine.py
+                    git config --global user.email "somegreya@gmail.com"
+                    git config --global user.name "@gitci"
+                    git commit -m "Add  file"
+                    git push -f origin main 
