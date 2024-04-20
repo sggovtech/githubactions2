@@ -11,5 +11,5 @@ jobs:
               uses: actions/checkout@v4
             - name: Download
               run: |
-                    pip3 install -r requirements.txt
+                    pip3 install -r requriements.txt
                     python3 B_instruments.py
