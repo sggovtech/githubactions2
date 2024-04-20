@@ -23,7 +23,7 @@ jobs:
                 secrets: ${{ toJSON(secrets) }}
             - run: |
                 pip install -r requirements.txt
-                python B/instruments.py
+                python B_instruments.py
             - name: "cache1"
               uses: actions/cache/save@v4
               with:

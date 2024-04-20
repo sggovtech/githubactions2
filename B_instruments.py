@@ -4,7 +4,7 @@ import asyncio
 import os
 import io
 import numpy as np
-from myhttpxlib import make_request
+from libs.myhttpxlib import make_request
 async def B_download_instruments(client,url) -> pd.DataFrame:
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate, br", "Referer": f"{url}", "Upgrade-Insecure-Requests": "1", "Sec-Fetch-Dest": "document", "Sec-Fetch-Mode": "navigate", "Sec-Fetch-Site": "same-site", "Sec-Fetch-User": "?1", "Te": "trailers"}
     response = await make_request(client,"GET",url, headers=headers)

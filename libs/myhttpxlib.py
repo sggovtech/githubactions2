@@ -1,9 +1,9 @@
 import httpx
 import traceback
-async def make_request(client:httpx.AsyncClient,method:str,url,headers=None,data=None):
+async def make_request(client:httpx.AsyncClient,method:str,url,headers=None,data=None,follow_redirects=True):
     while True:
         try:
-            response = await client.request(method, url, headers=headers,data=data)
+            response = await client.request(method, url, headers=headers,data=data,follow_redirects=follow_redirects)
             return response
         except httpx.ReadTimeout:
             client.cookies.clear()

@@ -26,7 +26,7 @@ runs:
         secrets: ${{ toJSON(secrets) }}
     - run: |
         pip install -r requirements.txt
-        python B/instruments_process.py ${{ inputs.test_input }}
+        python B_instruments_process.py ${{ inputs.test_input }}
       shell: bash
     - name: "cache1"
       uses: actions/cache/save@v4
