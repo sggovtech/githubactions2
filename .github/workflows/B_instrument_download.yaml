@@ -25,3 +25,9 @@ jobs:
             - run: |
                 pip install -r requirements.txt
                 python B/instruments.py
+            - name: "cache1"
+              uses: actions/cache/save@v3
+              with:
+                path: |
+                    B_instruments_*.csv
+                key: B_instruments
