@@ -1,0 +1,15 @@
+name: B_instrument_download
+on:
+    workflow_dispatch:
+permissions:
+    contents: write
+jobs:
+    download:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Download
+              run: |
+                    pip3 install -r requirements.txt
+                    python3 B_instruments.py
