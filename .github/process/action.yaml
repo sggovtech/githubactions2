@@ -33,4 +33,4 @@ runs:
       with:
         path: |
           B_instruments_${{ inputs.test_input }}.csv
-        key: B_instruments-cap
+        key: B_instruments_cap_${{ inputs.test_input }}
