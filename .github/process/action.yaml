@@ -1,5 +1,6 @@
-name: test-action
-description: test action
+
+name: download_and_process
+description: download_and_process
 inputs:
   test_input:
     description: key
@@ -10,8 +11,26 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: echo test
+    - name: Checkout
+      uses: actions/checkout@v4
       shell: bash
-      run: |
-        echo ${{inputs.test_input}}
-        echo ${{inputs.test_input2}}
+    - name: get cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          B_instruments_*.csv
+        key: B_instruments
+    - name: get secrets
+      uses: oNaiPs/secrets-to-env-action@v1
+      with:
+        secrets: ${{ toJSON(secrets) }}
+    - run: |
+        pip install -r requirements.txt
+        python B/instruments_process.py ${{ inputs.test_input }}
+      shell: bash
+    - name: "cache1"
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          B_instruments_${{ inputs.test_input }}.csv
+        key: B_instruments-cap

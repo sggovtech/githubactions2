@@ -40,5 +40,24 @@ jobs:
               uses: ./.github/process
               with:
                 test_input: 1
-                test_input2: 2
-        
+    process2:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 2
+    process3:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 3
+    
