@@ -226,11 +226,102 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v4
-            - uses: almahmoud/multi-cache-restore-action@main
-              name: Multi-cache
+            - uses: actions/cache/restore@v4
               with:
-                keys: "'B_instruments_cap_1','B_instruments_cap_2','B_instruments_cap_3','B_instruments_cap_4','B_instruments_cap_5','B_instruments_cap_6','B_instruments_cap_7','B_instruments_cap_8','B_instruments_cap_9','B_instruments_cap_10','B_instruments_cap_11','B_instruments_cap_12','B_instruments_cap_13','B_instruments_cap_14','B_instruments_cap_15','B_instruments_cap_16','B_instruments_cap_17','B_instruments_cap_18','B_instruments_cap_19"
-                paths: "'./B_instruments_1.csv','./B_instruments_2.csv','./B_instruments_3.csv','./B_instruments_4.csv','./B_instruments_5.csv','./B_instruments_6.csv','./B_instruments_7.csv','./B_instruments_8.csv','./B_instruments_9.csv','./B_instruments_10.csv','./B_instruments_11.csv','./B_instruments_12.csv','./B_instruments_13.csv','./B_instruments_14.csv','./B_instruments_15.csv','./B_instruments_16.csv','./B_instruments_17.csv','./B_instruments_18.csv','./B_instruments_19.csv'"            
+                path: |
+                    B_instruments_1.csv
+                key: B_instruments_cap_1
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_2.csv
+                key: B_instruments_cap_2
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                      B_instruments_3.csv
+                key: B_instruments_cap_3
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_4.csv
+                key: B_instruments_cap_4
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_5.csv
+                key: B_instruments_cap_5
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_6.csv
+                key: B_instruments_cap_6
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_7.csv
+                key: B_instruments_cap_7
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_8.csv
+                key: B_instruments_cap_8
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_9.csv
+                key: B_instruments_cap_9
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_10.csv
+                key: B_instruments_cap_10
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_11.csv
+                key: B_instruments_cap_11
+            - uses: actions/cache/restore@v4    
+              with:
+                path: |
+                    B_instruments_12.csv
+                key: B_instruments_cap_12
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_13.csv
+                key: B_instruments_cap_13
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_14.csv
+                key: B_instruments_cap_14
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_15.csv
+                key: B_instruments_cap_15
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_16.csv
+                key: B_instruments_cap_16
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_17.csv
+                key: B_instruments_cap_17
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    B_instruments_18.csv
+                key: B_instruments_cap_18
+            - uses: actions/cache/restore@v4    
+              with:
+                path: |
+                        B_instruments_19.csv
+                key: B_instruments_cap_19
+              
             - name: combine
               run: |
                     pip install -r requirements.txt
