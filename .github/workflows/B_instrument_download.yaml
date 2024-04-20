@@ -231,7 +231,7 @@ jobs:
               with:
                 path: |
                     B_instruments_*.csv
-                key: B_instruments-cap*
+                key: B_instruments_cap*
             - name: combine
               run: |
                 python B_instruments_combine.py
