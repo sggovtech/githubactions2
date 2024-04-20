@@ -13,7 +13,6 @@ runs:
   steps:
     - name: Checkout
       uses: actions/checkout@v4
-      shell: bash
     - name: get cache
       uses: actions/cache/restore@v4
       with:
@@ -27,7 +26,6 @@ runs:
     - run: |
         pip install -r requirements.txt
         python B_instruments_process.py ${{ inputs.test_input }}
-      shell: bash
     - name: "cache1"
       uses: actions/cache/save@v4
       with:
