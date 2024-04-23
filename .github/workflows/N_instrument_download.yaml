@@ -1,0 +1,346 @@
+name: N_instrument_download_and_process
+on:
+    workflow_dispatch:
+permissions:
+    actions: write
+    id-token: write
+    contents: write
+jobs:
+    download:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: delete existing cache
+              continue-on-error: true
+              run: |
+                gh cache list | grep 'N_' | awk '{print $2}'
+                gh cache list | grep 'N_' | awk '{print $2}' | xargs -I {} gh cache delete --key {}
+              env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: get secrets
+              uses: oNaiPs/secrets-to-env-action@v1
+              with:
+                secrets: ${{ toJSON(secrets) }}
+            - run: |
+                pip install -r requirements.txt
+                python N_instruments.py
+            - name: "cache1"
+              uses: actions/cache/save@v4
+              with:
+                path: |
+                    N_instruments_*.csv
+                key: N_instruments
+    process1:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 1
+    process2:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 2
+    process3:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 3
+    process4:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 4
+    process5:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 5
+    process6:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 6
+    process7:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 7
+    process8:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 8
+    process9:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 9
+    process10:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 10
+    process11:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 11
+    process12:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 12
+    process13:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 13
+    process14:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 14
+    process15:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 15
+    process16:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 16
+    process17:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 17
+    process18:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 18
+    process19:
+        runs-on: ubuntu-latest
+        needs: download
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - name: test-action
+              uses: ./.github/process
+              with:
+                test_input: 19
+    combine:
+        runs-on: ubuntu-latest
+        needs: [process1, process2, process3, process4, process5, process6, process7, process8, process9, process10, process11, process12, process13, process14, process15, process16, process17, process18, process19]
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_1.csv
+                key: N_instruments_cap_1
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_2.csv
+                key: N_instruments_cap_2
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                      N_instruments_3.csv
+                key: N_instruments_cap_3
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_4.csv
+                key: N_instruments_cap_4
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_5.csv
+                key: N_instruments_cap_5
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_6.csv
+                key: N_instruments_cap_6
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_7.csv
+                key: N_instruments_cap_7
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_8.csv
+                key: N_instruments_cap_8
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_9.csv
+                key: N_instruments_cap_9
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_10.csv
+                key: N_instruments_cap_10
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_11.csv
+                key: N_instruments_cap_11
+            - uses: actions/cache/restore@v4    
+              with:
+                path: |
+                    N_instruments_12.csv
+                key: N_instruments_cap_12
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_13.csv
+                key: N_instruments_cap_13
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_14.csv
+                key: N_instruments_cap_14
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_15.csv
+                key: N_instruments_cap_15
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_16.csv
+                key: N_instruments_cap_16
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_17.csv
+                key: N_instruments_cap_17
+            - uses: actions/cache/restore@v4
+              with:
+                path: |
+                    N_instruments_18.csv
+                key: N_instruments_cap_18
+            - uses: actions/cache/restore@v4    
+              with:
+                path: |
+                        N_instruments_19.csv
+                key: N_instruments_cap_19
+            - name: combine
+              run: |
+                    pip install -r requirements.txt
+                    python N_instruments_combine.py
+            - name: "Push"
+              uses: nick-fields/retry@v3
+              with:
+                timeout_seconds: 15
+                max_attempts: 25
+                command: |
+                    git add combined_instruments.csv
+                    git config --global user.email "somegreya@gmail.com"
+                    git config --global user.name "@gitci"
+                    git commit -m "Add  file"
+                    git push -f origin main 
+            - name: "submit"
+              env:
+                JWT_SECRET: ${{ secrets.JWT_SECRET }}
+                SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
+              run: |
+                    pip install -r requirements.txt
+                    python N_submit_instruments.py

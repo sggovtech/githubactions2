@@ -7,7 +7,7 @@ from libs.myhttpxlib import make_request
 
 async def main():
     # Get a list of all CSV files in the directory
-    csv_files = glob.glob('B_instruments*.csv')
+    csv_files = glob.glob('N_instruments*.csv')
 
     # Create an empty list to store the dataframes
     dfs = []
@@ -21,7 +21,7 @@ async def main():
     combined_df = pd.concat(dfs)
 
     # Save the combined dataframe to a new CSV file
-    combined_df.to_csv('combined_instruments.csv', index=False)
+    combined_df.to_csv('N_combined_instruments.csv', index=False)
    
 
 if __name__ == "__main__":

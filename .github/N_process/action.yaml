@@ -1,0 +1,38 @@
+
+name: download_and_process
+description: download_and_process
+inputs:
+  test_input:
+    description: key
+    required: true
+  test_input2:
+    description: key2
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: get cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          N_instruments_*.csv
+        key: N_instruments
+    - name: get secrets
+      env:
+        NSE_INIT: https://nsearchives.nseindia.com/
+        NSE_EQUITY: https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv
+        NSE_MAIN: https://www.nseindia.com
+        NSE_SHARE_PATTERN: https://www.nseindia.com/api/corporate-share-holdings-master?index=equities&
+        N_SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument
+      run: |
+        pip install -r requirements.txt
+        python B_instruments_process.py ${{ inputs.test_input }}
+      shell: bash
+    - name: "cache1"
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          B_instruments_${{ inputs.test_input }}.csv
+        key: B_instruments_cap_${{ inputs.test_input }}
