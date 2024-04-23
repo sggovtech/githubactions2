@@ -21,18 +21,20 @@ runs:
         key: N_instruments
     - name: get secrets
       env:
-        NSE_INIT: https://nsearchives.nseindia.com/
-        NSE_EQUITY: https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv
-        NSE_MAIN: https://www.nseindia.com
-        NSE_SHARE_PATTERN: https://www.nseindia.com/api/corporate-share-holdings-master?index=equities&
-        N_SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
+        NSE_INIT: ${{ secrets.NSE_INIT }}
+        NSE_EQUITY: ${{ secrets.NSE_EQUITY }}
+        NSE_MAIN: ${{ secrets.NSE_MAIN }}
+        NSE_SHARE_PATTERN: ${{ secrets.NSE_SHARE_PATTERN }}
+        N_SUBMIT_URL: ${{ secrets.N_SUBMIT_URL }}
       run: |
         pip install -r requirements.txt
-        python B_instruments_process.py ${{ inputs.test_input }}
+        python N_instruments_process.py ${{ inputs.test_input }}
       shell: bash
     - name: "cache1"
       uses: actions/cache/save@v4
       with:
         path: |
-          B_instruments_${{ inputs.test_input }}.csv
-        key: B_instruments_cap_${{ inputs.test_input }}
+          N_instruments_${{ inputs.test_input }}.csv
+        key: N_instruments_cap_${{ inputs.test_input }}
