@@ -15,7 +15,7 @@ jobs:
               continue-on-error: true
               run: |
                 gh cache list | grep 'N_' | awk '{print $2}'
-                gh cache list | grep 'N_' | awk '{print $2}' | xargs -I {} gh cache delete --key {}
+                gh cache list | grep 'N_' | awk '{print $2}' | xargs -I {} gh cache delete {}
               env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: get secrets
