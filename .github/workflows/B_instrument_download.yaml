@@ -345,4 +345,4 @@ jobs:
                 SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
               run: |
                     pip install -r requirements.txt
-                    python submit_instruments.py
+                    python B_submit_instruments.py
