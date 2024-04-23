@@ -21,7 +21,7 @@ async def main():
     combined_df = pd.concat(dfs)
 
     # Save the combined dataframe to a new CSV file
-    combined_df.to_csv('N_combined_instruments.csv', index=False)
+    combined_df.to_csv('combined_instruments_N.csv', index=False)
    
 
 if __name__ == "__main__":
