@@ -9,7 +9,7 @@ import requests
 
 async def main():
     # Read the CSV file
-    csv_file = 'N_combined_instruments.csv'
+    csv_file = 'combined_instruments_N.csv'
     
     # Upload the CSV file
     with open(csv_file, 'rb') as file:
