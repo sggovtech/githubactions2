@@ -337,6 +337,12 @@ jobs:
                     git commit -m "Add  file"
                     git push -f origin main 
             - name: "submit"
+              env:
+                B_INSTRUMENT_DOWNLOAD_URL1: ${{ secrets.B_INSTRUMENT_DOWNLOAD_URL1 }}
+                B_INSTRUMENT_DOWNLOAD_URL2: ${{ secrets.B_INSTRUMENT_DOWNLOAD_URL2 }}
+                B_SEARCH_CAP: ${{ secrets.B_SEARCH_CAP }}
+                JWT_SECRET: ${{ secrets.JWT_SECRET }}
+                SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
               run: |
                     pip install -r requirements.txt
                     python submit_instruments.py
