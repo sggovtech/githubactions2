@@ -336,3 +336,7 @@ jobs:
                     git config --global user.name "@gitci"
                     git commit -m "Add  file"
                     git push -f origin main 
+            - name: "submit"
+              run: |
+                    pip install -r requirements.txt
+                    python submit_instruments.py
