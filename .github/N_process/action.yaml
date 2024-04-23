@@ -21,13 +21,12 @@ runs:
         key: N_instruments
     - name: get secrets
       env:
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
-        NSE_INIT: ${{ secrets.NSE_INIT }}
-        NSE_EQUITY: ${{ secrets.NSE_EQUITY }}
-        NSE_MAIN: ${{ secrets.NSE_MAIN }}
-        NSE_SHARE_PATTERN: ${{ secrets.NSE_SHARE_PATTERN }}
-        N_SUBMIT_URL: ${{ secrets.N_SUBMIT_URL }}
+        SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument
+        NSE_INIT: https://nsearchives.nseindia.com/
+        NSE_EQUITY: https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv
+        NSE_MAIN: https://www.nseindia.com
+        NSE_SHARE_PATTERN: https://www.nseindia.com/api/corporate-share-holdings-master?index=equities&
+        N_SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument_nse
       run: |
         pip install -r requirements.txt
         python N_instruments_process.py ${{ inputs.test_input }}
