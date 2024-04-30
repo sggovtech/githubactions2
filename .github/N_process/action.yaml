@@ -26,7 +26,6 @@ runs:
         NSE_EQUITY: https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv
         NSE_MAIN: https://www.nseindia.com
         NSE_SHARE_PATTERN: https://www.nseindia.com/api/corporate-share-holdings-master?index=equities&
-        N_SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument_nse
       run: |
         pip install -r requirements.txt
         python N_instruments_process.py ${{ inputs.test_input }}
