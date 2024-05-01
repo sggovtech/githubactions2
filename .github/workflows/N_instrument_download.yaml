@@ -16,6 +16,7 @@ jobs:
               run: |
                 gh cache list | grep 'N_' | awk '{print $2}'
                 gh cache list | grep 'N_' | awk '{print $2}' | xargs -I {} gh cache delete {}
+                gh cache delete N_instruments
               env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: get secrets
