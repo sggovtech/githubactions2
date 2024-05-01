@@ -340,7 +340,7 @@ jobs:
             - name: "submit"
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
-                SUBMIT_URL: ${{ secrets.SUBMIT_URL }}
+                INSTRUMENT_SUBMIT_URL: ${{ secrets.INSTRUMENT_SUBMIT_URL }}
               run: |
                     pip install -r requirements.txt
                     python N_submit_instruments.py
