@@ -1,4 +1,4 @@
-name: N_instrument_download_and_process
+name: N_block_download
 on:
     workflow_dispatch:
 permissions:
