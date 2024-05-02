@@ -27,9 +27,11 @@ async def download_NSE_bulk_block_data(start_date:datetime.datetime.date, end_da
     response = await client.get(url_init, headers=headers)
     cookies = response.cookies.items()
     cookies = {name: value for name, value in cookies}
+    nse_bulk_url = os.environ["NSE_BULK_DEALS"]
+    nse_block_url = os.environ["NSE_BLOCK_DEALS"]
     tasks = [
-        make_request(url=f"{os.environ["NSE_BULK_DEALS"]}?from={start_date}&to={end_date}&csv=true%22", method="GET", headers=headers, cookies=cookies, client=client),
-        make_request(url=f"{os.environ["NSE_BLOCK_DEALS"]}?from={start_date}&to={end_date}&csv=true%22", method="GET", headers=headers, cookies=cookies, client=client)
+        make_request(url=f"{nse_bulk_url}?from={start_date}&to={end_date}&csv=true%22", method="GET", headers=headers, cookies=cookies, client=client),
+        make_request(url=f"{nse_block_url}?from={start_date}&to={end_date}&csv=true%22", method="GET", headers=headers, cookies=cookies, client=client)
     ]
     responses = await asyncio.gather(*tasks)
     df = pd.read_csv(io.StringIO(responses[0].text),index_col=False)
