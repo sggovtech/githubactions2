@@ -19,6 +19,7 @@ async def download_NSE_bulk_block_data(start_date:datetime.datetime.date, end_da
     Returns:
         pd.Dataframe : Pandas Dataframe.
     """
+    print("Downloading NSE bulk block data for the date range:", start_date, "to", end_date)
     client = httpx.AsyncClient()
     start_date = start_date.strftime('%d-%m-%Y')
     end_date = end_date.strftime('%d-%m-%Y')
@@ -47,6 +48,7 @@ async def download_NSE_bulk_block_data(start_date:datetime.datetime.date, end_da
         pass
     concat_db.drop_duplicates(subset=['Date','Symbol','Name','Client_Name','Deal_Type','Quantity_Traded','Price','Remarks'],inplace=True)
     concat_db.to_csv('N_bulk_block_deals.csv',index=False)
+    return len(concat_db)
 
 async def submit_NSE_bulk_block_data():
     """
@@ -67,13 +69,35 @@ async def submit_NSE_bulk_block_data():
         print(response.text)
         print("Failed to upload CSV file.")
 
-
+async def get_latest_dates():
+    """
+    Fetches the latest date from the database.
+    """
+    response = httpx.post("https://backend.tradeaajka.com/stock_data/search_block_deals",json={"skip": 0,"limit": 1})
+    if response.status_code == 200 and response.json().get('count')==0: # case when no data is present in the database
+        end_date = datetime.date.today()
+        start_date = end_date - datetime.timedelta(days=30)
+        return start_date, end_date
+    elif response.status_code == 200 and response.json().get('count')>0:
+        deals = response.json().get('deals')
+        last_date = datetime.datetime.strptime(deals[0].get('date'), '%d-%b-%y').date()
+        start_date = last_date + datetime.timedelta(days=1)
+        end_date = datetime.date.today()
+        return start_date, end_date    
+    
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         start_date = datetime.datetime.strptime(sys.argv[1], '%d-%m-%Y').date()
         end_date = datetime.datetime.strptime(sys.argv[2], '%d-%m-%Y').date()
-        asyncio.run(download_NSE_bulk_block_data(start_date, end_date))
-        asyncio.run(submit_NSE_bulk_block_data())
+        len_db = asyncio.run(download_NSE_bulk_block_data(start_date, end_date))
+        if len_db>0:
+            asyncio.run(submit_NSE_bulk_block_data())
+        else:
+            print("No data found for the given date range.")
     elif len(sys.argv) == 1:
-        asyncio.run(download_NSE_bulk_block_data(datetime.date.today(), datetime.date.today()))
-        asyncio.run(submit_NSE_bulk_block_data())
+        start_date,end_date = asyncio.run(get_latest_dates())
+        len_db = asyncio.run(download_NSE_bulk_block_data(start_date=start_date, end_date=end_date))
+        if len_db>0:
+            asyncio.run(submit_NSE_bulk_block_data())
+        else:
+            print("No data found for the given date range.")

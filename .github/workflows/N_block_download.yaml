@@ -1,6 +1,8 @@
 name: N_block_download
 on:
     workflow_dispatch:
+    schedule:
+        - cron: '0 * * * *'
 permissions:
     actions: write
     id-token: write
