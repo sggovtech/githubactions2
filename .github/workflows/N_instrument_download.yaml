@@ -1,6 +1,8 @@
 name: N_instrument_download_and_process
 on:
     workflow_dispatch:
+    schedule:
+      - cron: "0 */12 * * *"
 permissions:
     actions: write
     id-token: write
