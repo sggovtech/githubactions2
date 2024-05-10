@@ -8,6 +8,8 @@ from libs.myhttpxlib import make_request
 import os
 import sys
 
+
+
 async def download_NSE_bulk_block_data(start_date:datetime.datetime.date, end_date:datetime.datetime.date) -> pd.DataFrame:
     """
     Requests NSE (National Stock Exchange) data for a given date range.
@@ -47,6 +49,7 @@ async def download_NSE_bulk_block_data(start_date:datetime.datetime.date, end_da
     except:
         pass
     concat_db.drop_duplicates(subset=['Date','Symbol','Name','Client_Name','Deal_Type','Quantity_Traded','Price','Remarks'],inplace=True)
+    concat_db.dropna(inplace=True)
     concat_db.to_csv('N_bulk_block_deals.csv',index=False)
     return len(concat_db)
 
@@ -56,11 +59,20 @@ async def submit_NSE_bulk_block_data():
     """
     csv_file = 'N_bulk_block_deals.csv'
     # Upload the CSV file
+    
     with open(csv_file, 'rb') as file:
         url = os.environ['BLOCK_SUBMIT_URL']
         headers = {'X-BEARER':os.environ["JWT_SECRET"]}
-        response = httpx.post(url, files={'file': file}, headers=headers)
-    
+        attempts = 5
+        while attempts > 0:
+            attempts -= 1
+            try:
+                response = httpx.post(url, files={'file': file}, headers=headers)
+                break
+            except Exception as e:
+                print(f"Error: {e} Retrying...")
+                continue
+        
     # Check the response status
     if response.status_code == 200 and response.json().get('message') == 'Task Initiated':
         print("CSV file uploaded successfully.")
@@ -73,17 +85,19 @@ async def get_latest_dates():
     """
     Fetches the latest date from the database.
     """
-    response = httpx.post("https://backend.tradeaajka.com/stock_data/search_block_deals",json={"skip": 0,"limit": 1})
-    if response.status_code == 200 and response.json().get('count')==0: # case when no data is present in the database
-        end_date = datetime.date.today()
-        start_date = end_date - datetime.timedelta(days=30)
-        return start_date, end_date
-    elif response.status_code == 200 and response.json().get('count')>0:
-        deals = response.json().get('deals')
-        last_date = datetime.datetime.strptime(deals[0].get('date'), '%d-%b-%y').date()
-        start_date = last_date + datetime.timedelta(days=1)
-        end_date = datetime.date.today()
-        return start_date, end_date    
+    async with httpx.AsyncClient() as client:
+        response = await make_request(client=client,url="https://backend.tradeaajka.com/stock_data/search_block_deals",json_data={"skip": 0,"limit": 1},method="POST",headers={"X-BEARER":os.environ["JWT_SECRET"]},limit=100)
+        print(response)
+        if response.status_code == 200 and response.json().get('count')==0: # case when no data is present in the database
+            end_date = datetime.date.today()
+            start_date = end_date - datetime.timedelta(days=30)
+            return start_date, end_date
+        elif response.status_code == 200 and response.json().get('count')>0:
+            deals = response.json().get('deals')
+            last_date = datetime.datetime.strptime(deals[0].get('date'), '%d-%b-%y').date()
+            start_date = last_date - datetime.timedelta(days=3)
+            end_date = datetime.date.today()
+            return start_date, end_date    
     
 if __name__ == "__main__":
     if len(sys.argv) == 3:

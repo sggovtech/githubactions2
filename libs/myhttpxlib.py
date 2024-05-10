@@ -1,7 +1,8 @@
 import httpx
 import traceback
-async def make_request(client:httpx.AsyncClient,method:str,url,headers=None,data=None,follow_redirects=True,json_data=None,cookies=None):
-    while True:
+async def make_request(client:httpx.AsyncClient,method:str,url,headers=None,data=None,follow_redirects=True,json_data=None,cookies=None,limit=100_00):
+    while limit > 0:
+        limit -= 1
         try:
             response = await client.request(method, url, headers=headers, data=data, follow_redirects=follow_redirects, json=json_data, cookies=cookies)
             return response
