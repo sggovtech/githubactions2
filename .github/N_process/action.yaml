@@ -21,7 +21,7 @@ runs:
         key: N_instruments
     - name: get secrets
       env:
-        INSTRUMENT_SUBMIT_URL: https://backend.redteam.cafe/stock_data/post_instrument
+        INSTRUMENT_SUBMIT_URL: https://backend.tradeaajka.com/stock_data/post_instrument
         NSE_INIT: https://nsearchives.nseindia.com/
         NSE_EQUITY: https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv
         NSE_MAIN: https://www.nseindia.com
