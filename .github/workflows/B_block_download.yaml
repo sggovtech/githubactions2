@@ -13,7 +13,7 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-            - name: N Block Download
+            - name: B Block Download
               env:
                 BLOCK_SUBMIT_URL: ${{ secrets.BLOCK_SUBMIT_URL }}
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
